@@ -33,6 +33,18 @@ while True:
     new_frame_time = time.time()
     success, img = cap.read()
     results = model(img, stream = True)
+    for r in results:
+        boxes = r.boxes
+        for box in boxes:
+            # Bounding Box
+            x1, y1, x2, y2 = box.xyxy[0]
+            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+            # Confidence
+            conf = math.ceil((box.conf[0] * 100)) / 100
+            # Class Name
+            cls = int(box.cls[0])
+
+            cvzone.putTextRect(img, f"{classNames[cls]} {conf}", (max(0, x1), max(35, y1)), scale = 1.5, thickness = 1, offset = 3)
 
     fps = 1 / (new_frame_time - prev_frame_time)
     prev_frame_time = new_frame_time
