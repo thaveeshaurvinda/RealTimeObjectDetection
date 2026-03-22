@@ -1,10 +1,12 @@
 import torch
 import functools
 
-# THE SAFETY PATCH: Tells PyTorch to trust the YOLO model file
 torch.load = functools.partial(torch.load, weights_only=False)
 
-# Now your imports can happen
 from ultralytics import YOLO
 import cv2
+
+model = YOLO('../Yolo-Weights/yolov8n.pt')
+results = model("Images/3.jpg", show = True)
+cv2.waitKey(0)
 
