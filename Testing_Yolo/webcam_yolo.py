@@ -26,5 +26,18 @@ classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "trai
               "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors",
               "teddy bear", "hair drier", "toothbrush"]
 
+prev_frame_time = 0
+new_frame_time = 0
 
+while True:
+    new_frame_time = time.time()
+    success, img = cap.read()
+    results = model(img, stream = True)
+
+    fps = 1 / (new_frame_time - prev_frame_time)
+    prev_frame_time = new_frame_time
+    print(fps)
+
+    cv2.imshow("Image", img)
+    cv2.waitKey(1)
 
